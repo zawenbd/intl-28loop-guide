@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>28圈 · 简明知识库</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #faf9f8;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #1d1d1f;
+      line-height: 1.7;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page {
+      max-width: 700px;
+      width: 100%;
+    }
+
+    /* hero 轻量标识 */
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 0.3px;
+      color: #7a7a7e;
+      border: 1px solid #e1dfdd;
+      border-radius: 999px;
+      padding: 0.2rem 1rem;
+      margin-bottom: 2rem;
+      background: white;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 550;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+      color: #1a1a1c;
+    }
+
+    .subhead {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: #4e4e52;
+      margin-bottom: 2.5rem;
+      border-left: 3px solid #c4bfb9;
+      padding-left: 1.2rem;
+    }
+
+    /* 卡片式目录 */
+    .guide-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin: 2rem 0 2.8rem;
+    }
+
+    .guide-card {
+      background: white;
+      border-radius: 18px;
+      padding: 1.2rem 1.6rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+      border: 1px solid #ebe7e4;
+      transition: box-shadow 0.15s ease;
+    }
+
+    .guide-card:hover {
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+
+    .guide-card .num {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #9c9a98;
+      background: #f3f0ed;
+      border-radius: 20px;
+      padding: 0 0.7rem;
+      line-height: 1.8;
+      margin-right: 0.5rem;
+    }
+
+    .guide-card span {
+      font-weight: 500;
+      color: #2b2b2e;
+    }
+
+    .guide-card .desc {
+      display: block;
+      margin-top: 0.35rem;
+      font-size: 0.95rem;
+      color: #555458;
+    }
+
+    /* 说明区 + 提示区 双栏风格 */
+    .info-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      margin: 2.8rem 0;
+    }
+
+    .info-block {
+      background: white;
+      border-radius: 22px;
+      padding: 1.6rem 1.8rem;
+      border: 1px solid #e7e3df;
+    }
+
+    .info-block h3 {
+      font-size: 1rem;
+      font-weight: 550;
+      letter-spacing: 0.02em;
+      color: #313134;
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .info-block p {
+      font-size: 0.95rem;
+      color: #49494d;
+      margin-bottom: 0.5rem;
+    }
+
+    .info-block p:last-child {
+      margin-bottom: 0;
+    }
+
+    .info-block .label-badge {
+      background: #eae7e3;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      padding: 0.05rem 0.6rem;
+      color: #565558;
+      font-weight: 400;
+      margin-left: 0.2rem;
+    }
+
+    .info-block a {
+      color: #1d1d1f;
+      text-decoration: underline;
+      text-decoration-color: #cbc6c0;
+      text-underline-offset: 3px;
+      font-weight: 500;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .info-block a:hover {
+      text-decoration-color: #1d1d1f;
+    }
+
+    /* 提示区单独视觉 */
+    .tip-block {
+      background: #f5f3f0;
+      border: 1px solid #ddd9d4;
+    }
+
+    .tip-block h3::before {
+      content: "⏺";
+      font-size: 0.8rem;
+      margin-right: 0.2rem;
+      opacity: 0.7;
+    }
+
+    /* 相关信息区 */
+    .related-area {
+      margin: 2.8rem 0 2rem;
+      border-top: 1px solid #e3dfdb;
+      padding-top: 2rem;
+    }
+
+    .related-area h4 {
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      color: #6f6e6c;
+      margin-bottom: 1rem;
+    }
+
+    .related-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.8rem;
+    }
+
+    .related-items .pill {
+      background: white;
+      border: 1px solid #dfdbd7;
+      border-radius: 30px;
+      padding: 0.25rem 1rem;
+      font-size: 0.85rem;
+      color: #3a3a3c;
+    }
+
+    .related-items .pill a {
+      color: inherit;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .related-items .pill a:hover {
+      text-decoration: underline;
+    }
+
+    .faq-mini {
+      margin-top: 1.5rem;
+      background: white;
+      border-radius: 18px;
+      padding: 1.2rem 1.6rem;
+      border: 1px solid #e7e3df;
+    }
+
+    .faq-mini h4 {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #434346;
+      margin-bottom: 0.6rem;
+    }
+
+    .faq-mini summary {
+      font-size: 0.9rem;
+      font-weight: 450;
+      color: #2a2a2c;
+      cursor: pointer;
+      padding: 0.5rem 0;
+      list-style: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .faq-mini summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-mini summary::before {
+      content: "＋";
+      font-size: 0.8rem;
+      margin-right: 0.6rem;
+      color: #959290;
+      font-weight: 300;
+    }
+
+    .faq-mini details[open] summary::before {
+      content: "–";
+    }
+
+    .faq-mini .faq-answer {
+      font-size: 0.9rem;
+      color: #545458;
+      margin: 0.2rem 0 0.4rem 1.4rem;
+      padding-bottom: 0.2rem;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e7e3df;
+      margin: 1.2rem 0;
+    }
+
+    .footer-note {
+      font-size: 0.8rem;
+      color: #919090;
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid #edebe8;
+    }
+
+    @media (max-width: 550px) {
+      body { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.8rem; }
+      .guide-card { padding: 1rem 1.2rem; }
+      .info-block { padding: 1.2rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero-tag">📋 知识库·简明版</div>
+
+  <h1>28圈 · 使用指南与背景</h1>
+  <div class="subhead">定位、访问方式与常见问题</div>
+
+  <!-- 卡片目录感 -->
+  <div class="guide-grid">
+    <div class="guide-card">
+      <span class="num">01</span>
+      <span>平台定位</span>
+      <span class="desc">面向特定用户的在线互动空间，提供信息聚合与基础功能入口。</span>
+    </div>
+    <div class="guide-card">
+      <span class="num">02</span>
+      <span>访问方式</span>
+      <span class="desc">通过浏览器直接打开主域名，无需额外客户端或复杂配置。</span>
+    </div>
+    <div class="guide-card">
+      <span class="num">03</span>
+      <span>使用前须知</span>
+      <span class="desc">建议在稳定网络环境下使用，并留意所在地区的访问规则。</span>
+    </div>
+  </div>
+
+  <!-- 说明区 + 提示区 (双区独立) -->
+  <div class="info-panel">
+    <div class="info-block">
+      <h3>📌 说明区 <span class="label-badge">概述</span></h3>
+      <p><a href="https://intl-28loop.com">28圈</a> 是一个提供信息浏览与基础交互的网站，界面以简洁为主，功能模块分类清晰。用户可依据自身需要，在站内查找相关指引或内容。</p>
+      <p>平台不收集非必要的个人数据，日常运行中注重访问的流畅性。内容更新频率不定，建议定期浏览以获取最新动态。</p>
+    </div>
+
+    <div class="info-block tip-block">
+      <h3>⏺ 提示区</h3>
+      <p><strong>访问提醒</strong> · 若页面加载缓慢或出现异常，可尝试刷新或更换上网环境。部分地区的网络策略可能会影响连接，请知悉。</p>
+      <p><strong>安全提示</strong> · 请通过官方域名 <a href="https://intl-28loop.com">28圈</a> 访问，避免使用来历不明的镜像或第三方链接，以保护账户及设备安全。</p>
+    </div>
+  </div>
+
+  <!-- 相关信息区 + FAQ摘要 -->
+  <div class="related-area">
+    <h4>相关信息</h4>
+    <div class="related-items">
+      <span class="pill"><a href="https://intl-28loop.com">28圈</a></span>
+      <span class="pill">常见问题</span>
+      <span class="pill">使用环境</span>
+      <span class="pill">账号相关</span>
+    </div>
+
+    <div class="faq-mini">
+      <h4>FAQ 摘要</h4>
+      <details>
+        <summary>如何确认我访问的是官方站点？</summary>
+        <div class="faq-answer">请核对浏览器地址栏中的域名是否为 <strong>intl-28loop.com</strong>，并留意是否有安全锁标识。除此之外的地址均非官方。</div>
+      </details>
+      <details>
+        <summary>是否需要注册才能浏览内容？</summary>
+        <div class="faq-answer">部分基础页面无需注册即可查看，但某些功能或专区可能需要创建账户。具体以站内指引为准。</div>
+      </details>
+      <details>
+        <summary>遇到无法加载的情况怎么办？</summary>
+        <div class="faq-answer">先检查本地网络连接，尝试禁用 VPN 或更换 DNS；如仍无法访问，可能是临时维护或区域性限制，可稍后再试。</div>
+      </details>
+      <hr>
+      <p style="font-size:0.85rem; color:#6b6a6e;">更多内容可通过站点内导航或搜索获取。</p>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    · 本页面仅为知识库介绍，提供客观信息与访问提示。
+  </div>
+</div>
+</body>
+</html>
